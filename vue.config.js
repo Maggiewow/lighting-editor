@@ -4,7 +4,7 @@
  * @作者: 赵婷婷
  * @Date: 2021-11-11 14:53:36
  * @LastEditors: 赵婷婷
- * @LastEditTime: 2021-12-13 17:35:05
+ * @LastEditTime: 2021-12-13 17:46:44
  */
 const path = require('path');
 const CKEditorWebpackPlugin = require('@ckeditor/ckeditor5-dev-webpack-plugin');
@@ -46,13 +46,14 @@ module.exports = {
         plupload: 'plupload',
       }),
       // CKEditor needs its own plugin to be built using webpack.
-      new CKEditorWebpackPlugin({
-        // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
-        language: 'zh-cn',
-        addMainLanguageTranslationsToAllAssets: true,
-        // Append translations to the file matching the `app` name.
-        // translationsOutputFile: /src/,
-      }),
+      // 打包有报错 this.query.translateSource is not a function 须注释
+      // new CKEditorWebpackPlugin({
+      //   // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
+      //   language: 'zh-cn',
+      //   addMainLanguageTranslationsToAllAssets: true,
+      //   // Append translations to the file matching the `app` name.
+      //   // translationsOutputFile: /src/,
+      // }),
     ],
   },
 
