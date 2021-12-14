@@ -10,11 +10,11 @@
  * 4. 格式刷
  * @Date: 2021-11-11 10:26:39
  * @LastEditors: 赵婷婷
- * @LastEditTime: 2021-12-13 16:51:23
+ * @LastEditTime: 2021-12-14 11:50:26
 -->
 <template>
   <div class="editor-wrapper">
-    <p>ckeditor5编辑器</p>
+    <p class="title-ck">ckeditor5编辑器</p>
 
     <ckeditor
       :editor="editor"
@@ -81,10 +81,10 @@ import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformatio
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
 import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount.js';
 
-import Block from '../plugins/block';
-import Broadcast from '../plugins/broadcast';
-import Introduction from '../plugins/introduction';
-import Paralanguage from '../plugins/paralanguage';
+import Block from '@/plugins/block';
+import Broadcast from '@/plugins/broadcast';
+import Introduction from '@/plugins/introduction';
+import Paralanguage from '@/plugins/paralanguage';
 
 export default {
   name: 'lighting-editor',
@@ -274,11 +274,20 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+// @import url('../assets/css/common.css');
 .editor-wrapper {
   margin: 0 auto;
+  padding-bottom: 20px;
   width: 800px;
+  .title-ck {
+    margin: 20px 0;
+    font-size: 18px;
+  }
   .ck-editor {
     height: 400px;
+    // /deep/ p {
+    //   margin: 5px 0;
+    // }
   }
   .word-num {
     padding: 5px 0;

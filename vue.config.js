@@ -1,25 +1,24 @@
 /*
- * @文件描述:
- * @公司: 广电信通
- * @作者: 赵婷婷
- * @Date: 2021-11-11 14:53:36
+ * @Author: your name
+ * @Date: 2020-07-24 09:12:36
+ * @LastEditTime: 2021-12-14 11:34:18
  * @LastEditors: 赵婷婷
- * @LastEditTime: 2021-12-13 17:46:44
+ * @Description: In User Settings Edit
+ * @FilePath: \sucai-modal\vue.config.js
  */
 const path = require('path');
 const CKEditorWebpackPlugin = require('@ckeditor/ckeditor5-dev-webpack-plugin');
 const { styles } = require('@ckeditor/ckeditor5-dev-utils');
 
-var webpack = require('webpack');
 function resolve(dir) {
   return path.resolve(__dirname, dir);
 }
 
+var webpack = require('webpack');
+// const BASE_URL = process.env.NODE_ENV === 'production' ? '/dist/' : './';
+
 module.exports = {
-  // The source of CKEditor is encapsulated in ES6 modules. By default, the code
-  // from the node_modules directory is not transpiled, so you must explicitly tell
-  // the CLI tools to transpile JavaScript files in all ckeditor5-* modules.
-  transpileDependencies: [/ckeditor5-[^/\\]+[/\\]src[/\\].+\.js$/],
+  // publicPath: BASE_URL,
   pages: {
     index: {
       entry: 'src/main.js',
@@ -28,6 +27,7 @@ module.exports = {
     },
   },
   productionSourceMap: false,
+  transpileDependencies: [/ckeditor5-[^/\\]+[/\\]src[/\\].+\.js$/],
   configureWebpack: {
     output: {
       libraryExport: 'default',
@@ -45,41 +45,20 @@ module.exports = {
         jQuery: 'jquery',
         plupload: 'plupload',
       }),
-      // CKEditor needs its own plugin to be built using webpack.
-      // 打包有报错 this.query.translateSource is not a function 须注释
-      // new CKEditorWebpackPlugin({
-      //   // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
-      //   language: 'zh-cn',
-      //   addMainLanguageTranslationsToAllAssets: true,
-      //   // Append translations to the file matching the `app` name.
-      //   // translationsOutputFile: /src/,
-      // }),
+      new CKEditorWebpackPlugin({
+        // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
+        language: 'zh-cn',
+        additionalLanguages: 'all',
+        // Append translations to the file matching the `app` name.
+        // translationsOutputFile: /src/,
+      }),
     ],
   },
-
-  // Vue CLI would normally use its own loader to load .svg and .css files, however:
-  //	1. The icons used by CKEditor must be loaded using raw-loader,
-  //	2. The CSS used by CKEditor must be transpiled using PostCSS to load properly.
   chainWebpack: (config) => {
-    // (1.) To handle editor icons, get the default rule for *.svg files first:
     const svgRule = config.module.rule('svg');
-
-    // Then you can either:
-    //
-    // * clear all loaders for existing 'svg' rule:
-    //
-    //		svgRule.uses.clear();
-    //
-    // * or exclude ckeditor directory from node_modules:
+    // clear all loaders for existing 'svg' rule
     svgRule.exclude.add(path.join(__dirname, 'node_modules', '@ckeditor'));
-
-    // Add an entry for *.svg files belonging to CKEditor. You can either:
-    //
-    // * modify the existing 'svg' rule:
-    //
-    //		svgRule.use( 'raw-loader' ).loader( 'raw-loader' );
-    //
-    // * or add a new one:
+    // Add an entry for *.svg files belonging to CKEditor
     config.module
       .rule('cke-svg')
       .test(/ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/)
@@ -101,9 +80,25 @@ module.exports = {
           minify: true,
         });
       });
+
+    config.module
+      .rule('js')
+      .include.add('/packages')
+      .end()
+      .use('babel')
+      .loader('babel-loader')
+      .tap((options) => {
+        return options;
+      });
   },
   lintOnSave: false,
   css: {
     extract: false,
+  },
+  devServer: {
+    port: 8091,
+    hot: true,
+    open: 'Google Chrome',
+    proxy: 'https://shandianyun.iqilu.com',
   },
 };

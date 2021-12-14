@@ -1,28 +1,49 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-07-23 09:48:43
+ * @LastEditTime: 2021-04-25 11:15:00
+ * @LastEditors: 赵婷婷
+ * @Description: In User Settings Edit
+ * @FilePath: \sucai-modal\src\App.vue
+-->
 <template>
   <div id="app">
-    <Editor />
+    <router-view />
   </div>
 </template>
 
-<script>
-// 从源代码引入
-import Editor from './components/editor.vue';
-
-export default {
-  name: 'App',
-  components: {
-    Editor,
-  },
-};
-</script>
-
-<style>
+<style lang="less">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+#nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
+.over_hide {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.over_hide_2 {
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 </style>
