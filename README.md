@@ -1,6 +1,6 @@
 # lighting-editor
 
-闪电云编辑器
+ck编辑器
 
 # test
 
